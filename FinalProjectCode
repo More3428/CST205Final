@@ -31,3 +31,94 @@ def chromakey(src, bg):
 
 
 chromakey(person, scene)
+
+
+#This code is for the photo filter and where is starts
+
+import sys
+from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton,   QVBoxLayout, QComboBox)
+from PySide6.QtGui import QPixmap
+from PySide6.QtCore import Slot
+from PIL import Image
+
+class NewWindow(QWidget):
+  def __init__(self, url):
+    super().__init__()
+    self.text = QLabel(url)
+    self.layout = QVBoxLayout()
+    self.layout.addWidget(self.text)
+    self.setLayout(self.layout)
+
+
+class MyWindow(QWidget):
+  def __init__(self):
+    super().__init__()
+    #The Title
+    self.text = QLabel("Pick a Filter for your photo")
+    #pick filter options for your
+    self.my_list = ['Negative', 'Arctic', 'Sunset', 'Plain']
+
+    self.combo = QComboBox()
+    self.combo.addItems(self.my_list)
+    #this button should move to the next decision after the photo filter
+    self.btn = QPushButton('Next')
+    vbox = QVBoxLayout()
+    vbox.addWidget(self.text)
+    vbox.addWidget(self.combo)
+    vbox.addWidget(self.btn)
+    #opens the screen with the title,options, next
+    self.setLayout(vbox)
+
+    self.btn.clicked.connect(self.open_win)
+
+  @Slot() 
+  def open_win(self):
+    i = self.combo.currentIndex()
+    #instead of showing the image go to the next step
+    self.new_win = NewWindow(self.my_list[i])
+    if self.my_list[i] == 'Sunset':
+      imagefile = Image.open('insertimagehere')
+      def photofilter(picture):
+          new_list=[]
+          for p in picture.getdata():
+              new_list.append((p[0], p[1]-65, p[2]//2))
+          picture.putdata(new_list)
+          photofilter(imagefile)
+    if self.my_list[i] == 'Arctic':
+      imagefile = Image.open('insertimagehere')
+      def photofilter(picture):
+          new_list=[]
+          for p in picture.getdata():
+              new_list.append((p[0]//2, p[1]//3, p[2]))
+          picture.putdata(new_list)
+          photofilter(imagefile)
+    if self.my_list[i] == 'plain':
+      imagefile = Image.open('insertimagehere')
+      def photofilter(picture):
+          new_list=[]
+          for p in picture.getdata():
+              new_list.append((p[0], p[1], p[2]))
+          picture.putdata(new_list)
+          photofilter(imagefile)
+    if self.my_list[i] == 'Negative':
+      imagefile = Image.open('insertimagehere')
+      def photofilter(picture):
+          new_list=[]
+          for p in picture.getdata():
+              new_list.append((p[0]-255, p[1]-255, p[2]-255))
+          picture.putdata(new_list)
+          photofilter(imagefile)
+
+
+
+
+    #self.new_win.show()
+    self.repaint()
+
+
+app = QApplication(sys.argv)
+main = MyWindow()
+main.show()
+sys.exit(app.exec_())
+
+#this is where it ends
