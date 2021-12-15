@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as nump
 from PIL import Image
 import math 
+import sys
+from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton,   QVBoxLayout, QComboBox)
+from PySide6.QtGui import QPixmap
+from PySide6.QtCore import Slot
 
 
 person = Image.open('images/ctree_bluescreen.jpeg')
@@ -35,11 +39,6 @@ chromakey(person, scene)
 
 #This code is for the photo filter and where is starts
 
-import sys
-from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton,   QVBoxLayout, QComboBox)
-from PySide6.QtGui import QPixmap
-from PySide6.QtCore import Slot
-from PIL import Image
 
 class NewWindow(QWidget):
   def __init__(self, url):
