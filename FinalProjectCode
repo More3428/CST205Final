@@ -1,3 +1,13 @@
+#Comments   
+# Course - CST205 Multimedia Design and Programming 
+# Title - Photoz
+# Abstarct- Create an app where a user is able to upload their own photo with a green/blue background 
+#           and the app would give them the options to choose their background from the site    
+#           or filter and apply it to their inputted picture. 
+# Authors- Andre Moreno, Marcos Arroyo , Yulisa Ayala-Garcia
+
+
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as nump
@@ -9,6 +19,7 @@ from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Slot
 
 
+# Idealy we would have the user imput their own image here. 
 person = Image.open('images/ctree_bluescreen.jpeg')
 scene = Image.open('images/beach.jpg')
 green = person.getpixel((10,50))
@@ -17,7 +28,7 @@ w = min(person.width, scene.width)
 h = min(person.height, scene.width)
 scene = scene.resize((person.width, person.height))
 
-
+#Chroma Key Code
 def distance(color_1, color_2):
       r_diff = math.pow((color_1[0] - color_2[0]),2)
       g_diff = math.pow((color_1[1] - color_2[1]),2)
@@ -37,7 +48,7 @@ def chromakey(src, bg):
 chromakey(person, scene)
 
 
-#This code is for the photo filter and where is starts
+This code is for the photo filter and where is starts
 
 
 class NewWindow(QWidget):
@@ -53,7 +64,7 @@ class MyWindow(QWidget):
   def __init__(self):
     super().__init__()
     #The Title
-    self.text = QLabel("Pick a Filter for your photo")
+    self.text = QLabel("images/ctree_bluescreen.jpeg")
     #pick filter options for your
     self.my_list = ['Negative', 'Arctic', 'Sunset', 'Plain']
 
@@ -76,7 +87,7 @@ class MyWindow(QWidget):
     #instead of showing the image go to the next step
     self.new_win = NewWindow(self.my_list[i])
     if self.my_list[i] == 'Sunset':
-      imagefile = Image.open('insertimagehere')
+      imagefile = Image.open('images/ctree_bluescreen.jpeg')
       def photofilter(picture):
           new_list=[]
           for p in picture.getdata():
@@ -84,7 +95,7 @@ class MyWindow(QWidget):
           picture.putdata(new_list)
           photofilter(imagefile)
     if self.my_list[i] == 'Arctic':
-      imagefile = Image.open('insertimagehere')
+      imagefile = Image.open('images/ctree_bluescreen.jpeg')
       def photofilter(picture):
           new_list=[]
           for p in picture.getdata():
@@ -92,7 +103,7 @@ class MyWindow(QWidget):
           picture.putdata(new_list)
           photofilter(imagefile)
     if self.my_list[i] == 'plain':
-      imagefile = Image.open('insertimagehere')
+      imagefile = Image.open('images/ctree_bluescreen.jpeg')
       def photofilter(picture):
           new_list=[]
           for p in picture.getdata():
@@ -100,7 +111,7 @@ class MyWindow(QWidget):
           picture.putdata(new_list)
           photofilter(imagefile)
     if self.my_list[i] == 'Negative':
-      imagefile = Image.open('insertimagehere')
+      imagefile = Image.open('images/ctree_bluescreen.jpeg')
       def photofilter(picture):
           new_list=[]
           for p in picture.getdata():
@@ -121,3 +132,4 @@ main.show()
 sys.exit(app.exec_())
 
 #this is where it ends
+#Github Link: https://github.com/More3428/CST205Final
